@@ -190,11 +190,18 @@ test('frames across a move write to the new id and keep its memory', async (t) =
   t.mock.method(frame, 'spaceJobs', () => {});
   t.mock.method(frame, 'groupJobs', async () => {});
 
+  // Each frame reads the agent list afresh and waits for its writes: the
+  // daemon reuses a recent read and does not wait, which is not under test.
+  const frameAt = async (now) => {
+    frame.snapshot = null;
+    await frame.render(now);
+    await frame.settle();
+  };
   agents = [agent('w12:p1', 'w12:t1', 'w12', 'working')];
-  await frame.render(10000);
+  await frameAt(10000);
   sent.length = 0;
   agents = [agent('w0:p2', 'w0:t2', 'w0', 'idle')];
-  await frame.render(20000);
+  await frameAt(20000);
 
   assert.deepEqual(
     sent.filter(([pane]) => pane === 'w12:p1'),
@@ -208,7 +215,7 @@ test('frames across a move write to the new id and keep its memory', async (t) =
     "the row's title was not written to the new id",
   );
 
-  await frame.render(30000);
+  await frameAt(30000);
   assert.equal(frame.lastWorkingAt.get('w0:p2'), 10000, 'a later frame dropped the last turn the pane brought along');
   assert.ok(frame.doneUntil.has('w0:p2'), 'a later frame dropped the done badge the move ended on');
 });
