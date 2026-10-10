@@ -264,7 +264,7 @@ exec claude "$@"
 別のフォントが同じ私用領域を主張しています（CJK フォントによくあります）。ターミナルは
 `Herdr Agent Icons Max` にコードポイント単位で割り当てる必要があり、フォールバックに加えるだけでは
 足りません。Ghostty / kitty：`herdr plugin action invoke hhdebb.herdr-radar.install-font` で書き込めます。
-それ以外：`U+E1A0–U+E1BA` と `U+E1C0–U+E1C5` を手で割り当ててください。コードポイント割り当ての
+それ以外：`U+E1A0–U+E1BA`、`U+E1C0–U+E1C5` と `U+E1D0–U+E1DB` を手で割り当ててください。コードポイント割り当ての
 ないターミナル（Windows Terminal、iTerm）は `dist/JetBrainsMonoHerdr-Regular.ttf` をターミナルの
 フォントに——アイコンを埋め込んだ JetBrains Mono です。
 

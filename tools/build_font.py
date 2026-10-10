@@ -38,6 +38,11 @@ MAX_HEIGHT = 760
 CENTER_Y = 365
 
 
+def viewbox_bounds(root):
+    x, y, width, height = (float(v) for v in root.get("viewBox").split())
+    return x, y, x + width, y + height
+
+
 def svg_glyph(path: Path, fit: float = 1.0):
     root = ElementTree.parse(path).getroot()
     # SVGPath re-reads the file, so unsupported elements cannot be stripped
@@ -53,6 +58,11 @@ def svg_glyph(path: Path, fit: float = 1.0):
     if bounds_pen.bounds is None:
         raise ValueError(f"{path}: no outlines")
     x_min, y_min, x_max, y_max = bounds_pen.bounds
+    # Spinner frames are placed by their canvas, not their outline: the comet's
+    # head moves round the orbit, so each frame's outline box differs, and
+    # fitting each one separately would make the spinner wobble in size.
+    if path.stem.startswith("spin_"):
+        x_min, y_min, x_max, y_max = viewbox_bounds(root)
     dx = x_max - x_min
     dy = y_max - y_min
     scale = min(MAX_WIDTH / dx, MAX_HEIGHT / dy) * fit
@@ -165,9 +175,10 @@ def selfcheck(path: Path, fits: dict | None = None) -> None:
         SVGPath(str(ROOT / "tools" / "svg" / f"{name}.svg")).draw(bounds_pen)
         sx0, sy0, sx1, sy1 = bounds_pen.bounds
         expected = (sx1 - sx0) / (sy1 - sy0)
-        assert abs(width / height - expected) < 0.02, (
-            f"{name}: aspect {width / height:.3f} != svg {expected:.3f}"
-        )
+        if not name.startswith("spin_"):  # placed by canvas: see svg_glyph
+            assert abs(width / height - expected) < 0.02, (
+                f"{name}: aspect {width / height:.3f} != svg {expected:.3f}"
+            )
         fit = fit_for(fits, name)
         assert width <= MAX_WIDTH * fit + 8 and height <= MAX_HEIGHT * fit + 8, (
             f"{name}: {width}x{height} overflows "

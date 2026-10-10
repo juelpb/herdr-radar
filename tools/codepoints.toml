@@ -1,5 +1,5 @@
 family = "Herdr Agent Icons Max"
-version = "1.8.0"
+version = "1.9.0"
 
 [glyphs]
 claude = "E1A0"
@@ -55,6 +55,20 @@ state_unknown = "E1C3"
 state_idle_fresh = "E1C4"
 state_idle_stale = "E1C5"
 
+# The working spinner, twelve frames a turn (tools/make_state_svgs.py).
+spin_00 = "E1D0"
+spin_01 = "E1D1"
+spin_02 = "E1D2"
+spin_03 = "E1D3"
+spin_04 = "E1D4"
+spin_05 = "E1D5"
+spin_06 = "E1D6"
+spin_07 = "E1D7"
+spin_08 = "E1D8"
+spin_09 = "E1D9"
+spin_10 = "E1DA"
+spin_11 = "E1DB"
+
 # Fraction of the fit box a mark may occupy. Vendor logos fill it; the
 # state marks sit beside a logo on the same line and would compete with it
 # at full size.
@@ -87,6 +101,18 @@ state_idle = 0.68
 # The small dot is small on purpose — least ink for the least active
 # session. Unused since the tiers moved to the ring, kept for one edit back.
 state_idle_stale = 0.30
+spin_00 = 1.45
+spin_01 = 1.45
+spin_02 = 1.45
+spin_03 = 1.45
+spin_04 = 1.45
+spin_05 = 1.45
+spin_06 = 1.45
+spin_07 = 1.45
+spin_08 = 1.45
+spin_09 = 1.45
+spin_10 = 1.45
+spin_11 = 1.45
 
 claude = 1.64
 codex = 1.64

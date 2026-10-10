@@ -142,3 +142,37 @@ write(
     + stroke(tail, 82, cap_round=True)
     + [orient(arc_points(C, 470, 52, 0, 359.999))],
 )
+
+
+# working: a comet on its orbit, twelve frames a turn. The orbit is a hairline,
+# so in one ink colour it still reads as the faint track the comet runs on; the
+# comet thickens from nothing at its tail to a round head, so the eye reads
+# direction in every still frame and a 30-degree step looks like motion rather
+# than a jump. Every frame shares the orbit, which also gives all twelve the
+# same outline box (build_font.py keeps spin_ frames in their viewBox).
+SPIN_FRAMES = 12
+SPIN_RADIUS = 222
+SPIN_TRACK = 26
+SPIN_HEAD = 124
+SPIN_TAIL_DEGREES = 200
+
+
+def comet(head_angle):
+    """The comet's body, head at `head_angle`, tail trailing anticlockwise."""
+    steps = int(SPIN_TAIL_DEGREES / STEP_DEGREES)
+    outer, inner = [], []
+    for i in range(steps + 1):
+        t = i / steps  # 0 at the tail, 1 at the head
+        angle = math.radians(head_angle - SPIN_TAIL_DEGREES * (1 - t))
+        half = SPIN_HEAD / 2 * t**1.3  # eases in, so the tail fades rather than wedges
+        cos, sin = math.cos(angle), math.sin(angle)
+        outer.append((C + (SPIN_RADIUS + half) * cos, C + (SPIN_RADIUS + half) * sin))
+        inner.append((C + (SPIN_RADIUS - half) * cos, C + (SPIN_RADIUS - half) * sin))
+    head = math.radians(head_angle)
+    cap = arc_points(C + SPIN_RADIUS * math.cos(head), C + SPIN_RADIUS * math.sin(head), SPIN_HEAD / 2, 0, 359.999)
+    return [orient(outer + list(reversed(inner))), orient(cap)]
+
+
+for frame in range(SPIN_FRAMES):
+    head_angle = -90 + frame * 360 / SPIN_FRAMES  # clockwise from twelve o'clock
+    write(f"spin_{frame:02d}", ring(C, C, SPIN_RADIUS + SPIN_TRACK / 2, SPIN_RADIUS - SPIN_TRACK / 2) + comet(head_angle))

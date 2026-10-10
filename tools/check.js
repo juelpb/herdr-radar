@@ -188,7 +188,9 @@ const vendorKeys = {
   // `declared` is already every key assigned a codepoint, which leaves out the
   // file's `family` and `version` lines. The state glyphs share the file but
   // are not vendors.
-  'codepoints.toml': declared.map(({ name }) => name).filter((name) => !name.startsWith('state_')),
+  'codepoints.toml': declared
+    .map(({ name }) => name)
+    .filter((name) => !name.startsWith('state_') && !name.startsWith('spin_')),
   'assets/marks': fs
     .readdirSync(path.join(root, 'assets', 'marks'))
     .filter((f) => f.endsWith('.svg'))
