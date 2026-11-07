@@ -238,7 +238,6 @@ the config file and restarts the daemon.
 | `row_style` | `compact` | `brief`: project heading, the session's work in bold behind one state mark, where it stands dimmed beneath with its time and close label |
 | `title_from` | `title` | `work`: name a row by the pane's `$work` token when it has one |
 | `tab_bar_command` | empty | a command whose last line the tab bar shows instead of the directory line |
-| `[theme_light]`, `[theme_dark]` | empty | Herdr `theme.custom` colours for one appearance, e.g. `sidebar_bg = "#f5f5f7"` |
 | `pin` | empty | agents kept on top, by Herdr agent name, first on top: `"pam, coo"`; a pinned agent's worktrees stay under it |
 | `order` | `active` | `active` grouped by activity / `recent` flat / `off` Herdr's order |
 | `variant` | `auto` | logos from the icon font (`font`), plain Unicode (`text`), or `none`; `auto` recognises the font the plugin installed |
