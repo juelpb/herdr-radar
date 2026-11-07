@@ -235,6 +235,7 @@ the config file and restarts the daemon.
 | Option | Default | Does |
 | --- | --- | --- |
 | `agents_panel` | `plugin` | this plugin's panel, or `herdr` for Herdr's own |
+| `pin` | empty | agents kept on top, by Herdr agent name, first on top: `"pam, coo"`; a pinned agent's worktrees stay under it |
 | `order` | `active` | `active` grouped by activity / `recent` flat / `off` Herdr's order |
 | `variant` | `auto` | logos from the icon font (`font`), plain Unicode (`text`), or `none`; `auto` recognises the font the plugin installed |
 | `done_hold` | `until_seen` | keep the tick until the pane is focused, or a number of seconds |
