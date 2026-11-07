@@ -1,8 +1,9 @@
 'use strict';
 
-// `row_style = "brief"`: heading, work in bold behind one state mark, where it
-// stands dimmed beneath with its close label. And a session whose close label
-// asks for Juel ranks with an unseen finish.
+// The Drover look: `row_style = "brief"` rows (heading, work in bold behind one
+// state mark, the close label and where it stands beneath, one line per Space),
+// a close label asking for Juel ranking with an unseen finish, a tab bar
+// command of your own, and theme colours per appearance.
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
@@ -82,6 +83,6 @@ test('theme colours per appearance land in the theme block', (t) => {
   const before = config.themeColors;
   t.after(() => (config.themeColors = before));
   config.themeColors = { light: { sidebar_bg: '#f5f5f7' }, dark: { sidebar_bg: '#181818' } };
-  assert.match(managed.themeBlockFor('light'), /sidebar_bg = "#f5f5f7"/);
-  assert.match(managed.themeBlockFor('dark'), /sidebar_bg = "#181818"/);
+  assert.match(managed.themeBlock('light'), /sidebar_bg = "#f5f5f7"/);
+  assert.match(managed.themeBlock('dark'), /sidebar_bg = "#181818"/);
 });
