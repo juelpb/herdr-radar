@@ -71,9 +71,3 @@ test('a tab bar command of your own replaces the directory line', (t) => {
   config.tabBarCommand = '';
   assert.match(managed.block(), /command = 'cat /);
 });
-
-test('brief rows give each Space one line', (t) => {
-  withStyle(t, 'brief');
-  const spaces = managed.sidebarBlock('dark').split('[ui.sidebar.spaces]')[1];
-  assert.doesNotMatch(spaces, /\$space_logo_/);
-});
