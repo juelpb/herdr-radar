@@ -77,3 +77,11 @@ test('brief rows give each Space one line', (t) => {
   const spaces = managed.sidebarBlock('dark').split('[ui.sidebar.spaces]')[1];
   assert.doesNotMatch(spaces, /\$space_logo_/);
 });
+
+test('theme colours per appearance land in the theme block', (t) => {
+  const before = config.themeColors;
+  t.after(() => (config.themeColors = before));
+  config.themeColors = { light: { sidebar_bg: '#f5f5f7' }, dark: { sidebar_bg: '#181818' } };
+  assert.match(managed.themeBlockFor('light'), /sidebar_bg = "#f5f5f7"/);
+  assert.match(managed.themeBlockFor('dark'), /sidebar_bg = "#181818"/);
+});
